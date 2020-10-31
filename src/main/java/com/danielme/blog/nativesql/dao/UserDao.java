@@ -2,29 +2,27 @@ package com.danielme.blog.nativesql.dao;
 
 import java.math.BigInteger;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import org.hibernate.Session;
 import org.hibernate.query.NativeQuery;
 import org.hibernate.transform.AliasToBeanResultTransformer;
 import org.hibernate.transform.ResultTransformer;
-import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.danielme.blog.nativesql.UserDetail;
 import com.danielme.blog.nativesql.entities.User;
 
-@Repository
 public class UserDao {
 
-	@PersistenceContext
-	private EntityManager em;
+	private final EntityManager em;
 
-	
+	public UserDao(EntityManager em) {
+		this.em = em;
+	}
+
+
 	public List<User> findAll() {		
 		Query nativeQuery = em.createNativeQuery("SELECT id, name, email FROM user ORDER BY email DESC", User.class);
 		
@@ -59,7 +57,6 @@ public class UserDao {
 				.collect(Collectors.toList());*/
 	}	
 
-	@Transactional
 	public void insert(Long id, String name, String email) {
 		Query query = em.createNativeQuery("INSERT INTO user (id, name, email) VALUES(?,?,?)");
 	        query.setParameter(1, id);
@@ -86,8 +83,7 @@ public class UserDao {
 		return nativeQuery.getResultList();		
 	}	
 	
-	@Transactional
-	public List<UserDetail> findAllAliasToBean() {	
+	public List<UserDetail> findAllAliasToBean() {
 		NativeQuery nativeQuery = ((Session) this.em.getDelegate()).createSQLQuery("SELECT id, CONCAT(name, '-', email) AS details FROM user");
 		nativeQuery.setResultTransformer(new AliasToBeanResultTransformer(UserDetail.class));
 		return nativeQuery.list();		

@@ -15,7 +15,6 @@
 		<java.version>1.8</java.version>
 		<maven.version>3.0</maven.version>
 
-		<spring.version>5.0.7.RELEASE</spring.version>
 		<hibernate.version>5.2.12.Final</hibernate.version>
 		<c3p0.version>0.9.1.2</c3p0.version>
 		<log4j.version>1.2.17</log4j.version>
@@ -39,10 +38,6 @@
 			</roles>
 		</developer>
 	</developers>
-
-	<scm>
-		<url></url>
-	</scm>
 
 	<licenses>
 		<license>
@@ -108,18 +103,6 @@
 	<dependencies>
 
 		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-context</artifactId>
-			<version>${spring.version}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-orm</artifactId>
-			<version>${spring.version}</version>
-		</dependency>		
-
-		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-entitymanager</artifactId>
 			<version>${hibernate.version}</version>
@@ -138,13 +121,6 @@
 			<version>${log4j.version}</version>
 		</dependency>
 
-		<!-- log4j -> sl4j bridge for Spring -->
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-log4j12</artifactId>
-			<version>${slf4j.version}</version>
-		</dependency>
-
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
@@ -156,13 +132,6 @@
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>${junit.version}</version>
-			<scope>test</scope>
-		</dependency>
-
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-test</artifactId>
-			<version>${spring.version}</version>
 			<scope>test</scope>
 		</dependency>
 

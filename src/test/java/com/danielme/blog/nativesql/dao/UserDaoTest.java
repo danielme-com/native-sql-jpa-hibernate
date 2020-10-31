@@ -1,17 +1,14 @@
 package com.danielme.blog.nativesql.dao;
 
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
+import org.junit.Test;
+
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-
-
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-
-import com.danielme.blog.nativesql.ApplicationContext;
-import com.danielme.blog.nativesql.dao.UserDao;
 
 /**
  * Some test cases.
@@ -19,13 +16,16 @@ import com.danielme.blog.nativesql.dao.UserDao;
  * @author danielme.com
  * 
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = { ApplicationContext.class })
-//@Transactional
 public class UserDaoTest {
 
-	@Autowired
-	private UserDao userDao;
+	private static UserDao userDao;
+
+	@BeforeClass
+	public static void setup() {
+		EntityManagerFactory entityManagerFactory = Persistence
+				.createEntityManagerFactory("sqlDemoPersistence");
+		userDao = new UserDao(entityManagerFactory.createEntityManager());
+	}
 	
 	@Test
 	public void testFindAll() {
