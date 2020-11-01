@@ -86,11 +86,10 @@ public class UserDao {
     }
 
     public List<UserDetail> findAllAliasToBean() {
-        NativeQuery nativeQuery = ((Session) this.em.getDelegate()).createSQLQuery("SELECT id, CONCAT(name, '-', email) AS details FROM user");
+        NativeQuery nativeQuery = ((Session) this.em.getDelegate()).createSQLQuery("SELECT id as \"id\", CONCAT(name, '-', email) AS \"details\" FROM user");
         nativeQuery.setResultTransformer(new AliasToBeanResultTransformer(UserDetail.class));
         return nativeQuery.list();
     }
-
 
     private static class DetailTransformer implements ResultTransformer {
 

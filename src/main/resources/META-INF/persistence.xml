@@ -9,13 +9,13 @@
         <class>com.danielme.blog.nativesql.entities.User</class>
 
         <properties>
-            <property name="javax.persistence.jdbc.url"
-                      value="jdbc:mysql://localhost:3306/sql_demo?autoReconnect=true&amp;useSSL=false&amp;serverTimezone=UTC"/>
-            <property name="javax.persistence.jdbc.user" value="user"/>
-            <property name="javax.persistence.jdbc.password" value="password"/>
+            <property name="javax.persistence.jdbc.driver" value="org.hsqldb.jdbcDriver"/>
+            <property name="javax.persistence.jdbc.url" value="jdbc:hsqldb:mem:testdb"/>
+            <property name="javax.persistence.jdbc.user" value="sa"/>
+            <property name="javax.persistence.jdbc.password" value=""/>
             <property name="hibernate.hbm2ddl.auto" value="update"/>
             <property name="hibernate.format_sql" value="true"/>
-            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL55Dialect"/>
+            <property name="hibernate.dialect" value="org.hibernate.dialect.HSQLDialect"/>
         </properties>
 
     </persistence-unit>
