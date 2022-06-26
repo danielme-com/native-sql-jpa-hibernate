@@ -73,9 +73,9 @@ public class UserDao {
     }
 
     public List<UserDetail> findAllDetailTransformer() {
-        NativeQuery nativeQuery = ((Session) this.em.getDelegate()).createSQLQuery("SELECT id, CONCAT(name, '-', email) AS concat FROM user");
-        nativeQuery.setResultTransformer(new DetailTransformer());
-        return nativeQuery.list();
+        Query query = em.createNativeQuery("SELECT id, CONCAT(name, '-', email) AS concat FROM user");
+        query.unwrap(org.hibernate.query.Query.class).setResultTransformer(new DetailTransformer());
+        return query.getResultList();
     }
 
     public User findByIdNamedQuery(Long id) {
@@ -90,9 +90,9 @@ public class UserDao {
     }
 
     public List<UserDetail> findAllAliasToBean() {
-        NativeQuery nativeQuery = ((Session) this.em.getDelegate()).createSQLQuery("SELECT id as \"id\", CONCAT(name, '-', email) AS \"details\" FROM user");
-        nativeQuery.setResultTransformer(new AliasToBeanResultTransformer(UserDetail.class));
-        return nativeQuery.list();
+        Query query = em.createNativeQuery("SELECT id as \"id\", CONCAT(name, '-', email) AS \"details\" FROM user");
+        query.unwrap(org.hibernate.query.Query.class).setResultTransformer(new AliasToBeanResultTransformer(UserDetail.class));
+        return query.getResultList();
     }
 
     private static class DetailTransformer implements ResultTransformer {
