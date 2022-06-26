@@ -108,6 +108,18 @@ public class UserDao {
         return query.getResultList();
     }
 
+    public List<User> findAll(int first, int max) {
+        /*
+         * Query nativeQuery = em.createNativeQuery("SELECT * FROM user ORDER BY id LIMIT :first OFFSET :max", User.class);
+         * nativeQuery.setParameter("first", first);
+         * nativeQuery.setParameter("max", max);
+         */
+        Query nativeQuery = em.createNativeQuery("SELECT * FROM user ORDER BY id", User.class);
+        nativeQuery.setFirstResult(first);
+        nativeQuery.setMaxResults(max);
+        return nativeQuery.getResultList();
+    }
+
     private static class DetailTransformer implements ResultTransformer {
 
         private static final long serialVersionUID = 1L;

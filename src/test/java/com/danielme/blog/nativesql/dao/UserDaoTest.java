@@ -1,12 +1,15 @@
 package com.danielme.blog.nativesql.dao;
 
 import com.danielme.blog.nativesql.DbUtils;
+import com.danielme.blog.nativesql.entities.User;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -84,6 +87,14 @@ public class UserDaoTest {
     @Test
     public void testCount() {
         assertEquals(2, userDao.count().intValue());
+    }
+
+    @Test
+    public void testPagination() {
+        List<User> users = userDao.findAll(1, 1);
+
+        assertEquals(1, users.size());
+        assertEquals((Long) 2L, users.get(0).getId());
     }
 
 }
