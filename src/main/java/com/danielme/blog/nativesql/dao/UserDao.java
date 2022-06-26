@@ -63,12 +63,11 @@ public class UserDao {
         return nativeQuery.getResultList();
     }
 
-    public void insert(Long id, String name, String email) {
+    public void insert(String name, String email) {
         em.getTransaction().begin();
-        Query query = em.createNativeQuery("INSERT INTO user (id, name, email) VALUES(?,?,?)");
-        query.setParameter(1, id);
-        query.setParameter(2, name);
-        query.setParameter(3, email);
+        Query query = em.createNativeQuery("INSERT INTO user (name, email) VALUES(:name,:email)");
+        query.setParameter("name", name);
+        query.setParameter("email", email);
         query.executeUpdate();
         em.getTransaction().commit();
     }

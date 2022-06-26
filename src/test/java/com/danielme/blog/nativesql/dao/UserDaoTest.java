@@ -46,7 +46,9 @@ public class UserDaoTest {
 
     @Test
     public void testInsert() {
-        userDao.insert(20113L, "name", "email");
+        userDao.insert("name", "email");
+
+        assertEquals(3, userDao.count().intValue());
     }
 
     @Test
