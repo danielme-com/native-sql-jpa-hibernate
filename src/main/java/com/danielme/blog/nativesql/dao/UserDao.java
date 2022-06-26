@@ -1,9 +1,9 @@
 package com.danielme.blog.nativesql.dao;
 
 import com.danielme.blog.nativesql.UserDetail;
+import com.danielme.blog.nativesql.UserDetailRecord;
 import com.danielme.blog.nativesql.entities.User;
-import org.hibernate.Session;
-import org.hibernate.query.NativeQuery;
+import org.hibernate.transform.AliasToBeanConstructorResultTransformer;
 import org.hibernate.transform.AliasToBeanResultTransformer;
 import org.hibernate.transform.ResultTransformer;
 
@@ -11,6 +11,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.persistence.Tuple;
 import javax.persistence.TypedQuery;
+import java.lang.reflect.Constructor;
 import java.math.BigInteger;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -92,6 +93,19 @@ public class UserDao {
     public List<UserDetail> findAllAliasToBean() {
         Query query = em.createNativeQuery("SELECT id as \"id\", CONCAT(name, '-', email) AS \"details\" FROM user");
         query.unwrap(org.hibernate.query.Query.class).setResultTransformer(new AliasToBeanResultTransformer(UserDetail.class));
+        return query.getResultList();
+    }
+
+    public List<UserDetailRecord> findAllConstructorTransformer() {
+        Query query = em.createNativeQuery("SELECT id as \"id\", CONCAT(name, '-', email) AS \"details\" FROM user");
+        Constructor<UserDetailRecord> constructor;
+        try {
+            constructor = UserDetailRecord.class.getConstructor(BigInteger.class, String.class);
+        } catch (NoSuchMethodException ee) {
+            throw new RuntimeException("constructor for " + UserDetailRecord.class + "not found !!!");
+        }
+        query.unwrap(org.hibernate.query.Query.class)
+                .setResultTransformer(new AliasToBeanConstructorResultTransformer(constructor));
         return query.getResultList();
     }
 

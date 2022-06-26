@@ -55,6 +55,11 @@ public class UserDaoTest {
     }
 
     @Test
+    public void testFindAllConstructorTransformer() {
+        assertEquals(2, userDao.findAllConstructorTransformer().size());
+    }
+
+    @Test
     public void testFindAllWithTuples() {
         assertEquals(2, userDao.findAllWithTuples().size());
     }
