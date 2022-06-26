@@ -35,6 +35,10 @@ public class UserDao {
 				.collect(Collectors.toList());*/
     }
 
+    public BigInteger count() {
+        return (BigInteger) em.createNativeQuery("SELECT count(*) FROM user").getSingleResult();
+    }
+
     public List<User> findAllWithTuples() {
         Query nativeQuery = em.createNativeQuery("SELECT id, name, email FROM user ORDER BY email DESC", Tuple.class);
         List<Tuple> tuples = nativeQuery.getResultList();

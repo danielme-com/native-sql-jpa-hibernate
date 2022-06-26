@@ -43,11 +43,11 @@ public class UserDaoTest {
     public void testFindAllDetail() {
         assertEquals(2, userDao.findAllDetail().size());
     }
-	
-	@Test
-	public void testInsert() {
-		userDao.insert(20113L, "name", "email");
-	}
+
+    @Test
+    public void testInsert() {
+        userDao.insert(20113L, "name", "email");
+    }
 
     @Test
     public void testFindAllAliasToBean() {
@@ -72,6 +72,11 @@ public class UserDaoTest {
     @Test
     public void testFindAllDetailTransformer() {
         assertEquals(2, userDao.findAllDetailTransformer().size());
+    }
+
+    @Test
+    public void testCount() {
+        assertEquals(2, userDao.count().intValue());
     }
 
 }
