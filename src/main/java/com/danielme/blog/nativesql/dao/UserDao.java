@@ -57,6 +57,13 @@ public class UserDao {
 		return new User(((BigInteger) result[0]).longValue(), (String) result[1], (String) result[2]);*/
     }
 
+    public List<User> findByText(String text) {
+        Query nativeQuery = em.createNativeQuery("SELECT * FROM user " +
+                "WHERE name LIKE LOWER(:text) OR email LIKE LOWER(:text)", User.class);
+        String textSearch = text == null ? "%" : "%" + text.toLowerCase() + "%";
+        nativeQuery.setParameter("text", textSearch);
+        return nativeQuery.getResultList();
+    }
 
     public List<UserDetail> findAllDetail() {
         Query nativeQuery = em.createNativeQuery("SELECT id, CONCAT(name, '-', email) as concat From user", "DetailMapping");

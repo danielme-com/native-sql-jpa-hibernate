@@ -97,4 +97,12 @@ public class UserDaoTest {
         assertEquals((Long) 2L, users.get(0).getId());
     }
 
+    @Test
+    public void findByText() {
+        List<User> users = userDao.findByText("MIKE");
+
+        assertEquals(1, users.size());
+        assertEquals((Long) 1L, users.get(0).getId());
+    }
+
 }
